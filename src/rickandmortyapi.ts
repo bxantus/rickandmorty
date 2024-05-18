@@ -11,6 +11,11 @@ export interface Success<T> {
 
 export type Result<T> = Err | Success<T>
 
+interface NameAndLink {
+    name: string
+    url: string
+}
+
 export interface Character {
     id: number
     name: string
@@ -22,6 +27,12 @@ export interface Character {
     image:string
     /** Link to the character's own URL endpoint. */
     url: string
+    /** Name and link to the character's origin location. */
+    origin: NameAndLink
+    /** Name and link to the character's last known location endpoint. */
+    location: NameAndLink
+    /** List of episodes in which this character appeared. */
+    episode: string[]
 }
 
 export interface CharactersResponse {
