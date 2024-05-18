@@ -4,7 +4,8 @@
   "description": "Rick&Morty Characters",
   "scripts": {
     "bundle": "esbuild --bundle --sourcemap --outdir=public  src/main.tsx ",
-    "bundle-serve": "esbuild --bundle --watch --sourcemap --servedir=public --outdir=public  src/main.tsx "
+    "bundle-serve": "esbuild --bundle --watch --sourcemap --servedir=public --outdir=public src/main.tsx", 
+    "publish": "esbuild --bundle --outdir=public --minify  src/main.tsx && gh-pages -d public"
   },
   "author": "bxantus",
   "license": "ISC",
@@ -18,6 +19,7 @@
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "esbuild": "^0.21.3",
+    "gh-pages": "^6.1.1",
     "typescript": "^5.4.5"
   }
 }
