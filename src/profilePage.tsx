@@ -38,11 +38,7 @@ function Profile({character}:{character:Character}) {
                 <InfoEntry title="Type" text={character.type}/>
                 <InfoEntry title="Origin location" text={character.origin.name}/>
                 <InfoEntry title="Last known location" text={character.location.name}/>
-                
-                <ListGroup.Item>
-                    <div className="fw-bold">Episodes</div>
-                    {/* todo */}
-                </ListGroup.Item>
+                <InfoEntry title="Episodes" text={gatherEpisodeIds(character)}/>
             </ListGroup>
         </Card.Body>
     </Card>
@@ -55,4 +51,9 @@ function InfoEntry({title, text}:{title:string, text:string}) {
         <div className="fw-bold">{title}</div>
         {text}
     </ListGroup.Item>
+}
+
+function gatherEpisodeIds(character:Character) {
+    const episodeRe = /episode\/(\d+)$/i
+    return character.episode.map(e => e.match(episodeRe)?.[1]).join(", ")
 }
