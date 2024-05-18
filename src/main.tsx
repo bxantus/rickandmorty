@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider,  createHashRouter } from "react-router-dom";
-import ProfilePage, {loader as profileLoader} from "./profile";
+import ProfilePage, {loader as profileLoader} from "./profilePage";
 import CharactersPage, { loader as characterLoader } from "./charactersPage";
 
 // using hash router instead of browser router  as it's easier to setup with gihub pages (and esbuild serve)
