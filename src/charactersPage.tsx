@@ -3,19 +3,36 @@ import Container from "react-bootstrap/Container"
 import { CharactersResponse, Result, getCharacters } from "./rickandmortyapi";
 import CharactersTable from "./characters";
 import Alert from "react-bootstrap/Alert";
+import InputGroup from "react-bootstrap/InputGroup";
+import BForm from "react-bootstrap/Form";
 import Pager from "./pager";
-import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
+import { Form, LoaderFunctionArgs, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 
-export function loader({ request }:LoaderFunctionArgs) {
-    const url = new URL(request.url);
-    const page = url.searchParams.get("page");
-    return getCharacters( { page: page ?? 1} )
+interface CharacterLoaderResult {
+    characterRes: Result<CharactersResponse>
+    nameFilter: string | null
+}
+
+export async function loader({ request }:LoaderFunctionArgs):Promise<CharacterLoaderResult> {
+    const searchParams = new URL(request.url).searchParams;
+    const page = searchParams.get("page");
+    const nameFilter = searchParams.get("nameFilter")
+    const characterRes = await getCharacters({ 
+        page: page ?? 1, 
+        nameFilter
+    })
+    return {
+        characterRes,
+        nameFilter
+    }
 }
 
 
 export default function CharactersPage() {
-    const characterRes = useLoaderData() as Result<CharactersResponse>
+    const loaderRes = useLoaderData() as CharacterLoaderResult
+    const characterRes = loaderRes.characterRes
     const navigate = useNavigate()
+    const submit = useSubmit();
 
     const page = characterRes.kind == "success" ? characterRes.data.info.currentPage : 0
     const numPages = characterRes.kind == "success" ? characterRes.data.info.pages : 0
@@ -27,7 +44,13 @@ export default function CharactersPage() {
     } else if (characterRes) characterDetails = <Alert variant="error">Error: {characterRes.description}</Alert>
 
     return <Container className="p-3">
-                {numPages > 0 ? <Pager page={page} numPages={numPages} onPageChanged={ p=> navigate(`?page=${p}`) } ></Pager> : undefined}
+                <Form>
+                    <InputGroup>
+                        <InputGroup.Text>Search by name</InputGroup.Text>
+                        <BForm.Control name="nameFilter" type="text" defaultValue={loaderRes.nameFilter ?? ""} onChange={ event => submit(event.currentTarget.form) }></BForm.Control>       
+                    </InputGroup>
+                </Form>
+                {numPages > 0 ? <Pager page={page} numPages={numPages} onPageChanged={ p=> navigate(`?nameFilter=${loaderRes.nameFilter}&page=${p}`) } ></Pager> : undefined}
                 {characterDetails}
     </Container>
 }

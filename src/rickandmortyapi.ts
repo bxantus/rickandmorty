@@ -35,11 +35,14 @@ export interface CharactersResponse {
     results: Character[]
 }
 
-export async function getCharacters({page}:{page:number|string}):Promise<Result<CharactersResponse>> {
+export async function getCharacters({page, nameFilter}:{page:number|string, nameFilter?: string|null}):Promise<Result<CharactersResponse>> {
     try {
         if (typeof page == "string")
             page = Number.parseInt(page) // keep page as a number. string type is allowed for easy usage
-        const res = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`)
+        let url = `https://rickandmortyapi.com/api/character?page=${page}`
+        if (nameFilter)
+            url += `&name=${nameFilter}` // todo: build real URL (values may have to be URL escaped here)
+        const res = await fetch(url)
         if (res.status != 200)
             return { kind: "error", description: res.statusText, code: res.status }
         const characters = await res.json() as CharactersResponse
