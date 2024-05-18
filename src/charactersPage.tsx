@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container"
 import { CharactersResponse, Result, getCharacters } from "./rickandmortyapi";
 import CharactersTable from "./characters";
@@ -27,12 +27,18 @@ export async function loader({ request }:LoaderFunctionArgs):Promise<CharacterLo
     }
 }
 
-
 export default function CharactersPage() {
     const loaderRes = useLoaderData() as CharacterLoaderResult
     const characterRes = loaderRes.characterRes
     const navigate = useNavigate()
     const submit = useSubmit();
+
+    useEffect(() => { // this effect is used to keep the nameFilter input in sync with the URL we're currently showing
+                      // further explanation: https://reactrouter.com/en/main/start/tutorial#synchronizing-urls-to-form-state
+        const nameFilterInput = document.querySelector("[name=nameFilter]") as HTMLInputElement|null
+        if (nameFilterInput) 
+            nameFilterInput.value = loaderRes.nameFilter ?? "";
+    }, [loaderRes.nameFilter]);
 
     const page = characterRes.kind == "success" ? characterRes.data.info.currentPage : 0
     const numPages = characterRes.kind == "success" ? characterRes.data.info.pages : 0
@@ -43,14 +49,35 @@ export default function CharactersPage() {
         characterDetails = <CharactersTable characters={characterRes.data.results}></CharactersTable>
     } else if (characterRes) characterDetails = <Alert variant="error">Error: {characterRes.description}</Alert>
 
-    return <Container className="p-3">
-                <Form>
-                    <InputGroup>
-                        <InputGroup.Text>Search by name</InputGroup.Text>
-                        <BForm.Control name="nameFilter" type="text" defaultValue={loaderRes.nameFilter ?? ""} onChange={ event => submit(event.currentTarget.form) }></BForm.Control>       
-                    </InputGroup>
-                </Form>
-                {numPages > 0 ? <Pager page={page} numPages={numPages} onPageChanged={ p=> navigate(`?nameFilter=${loaderRes.nameFilter}&page=${p}`) } ></Pager> : undefined}
-                {characterDetails}
-    </Container>
+    return (
+        <Container className="p-3">
+            <Form>
+                <InputGroup>
+                    <InputGroup.Text>Search by name</InputGroup.Text>
+                    <BForm.Control name="nameFilter" 
+                        type="text" defaultValue={loaderRes.nameFilter ?? ""} 
+                        onChange={ 
+                            event => {
+                                const isFirstSearch = loaderRes.nameFilter == null
+                                submit(event.currentTarget.form, {replace: !isFirstSearch}) // avoid spamming history
+                            }
+                        }
+                    />
+                </InputGroup>
+            </Form>
+            {numPages > 0 ? 
+                <Pager page={page} numPages={numPages} 
+                        onPageChanged={ p=> {
+                            let target = "?"    
+                            if (loaderRes.nameFilter != null)
+                                target += `nameFilter=${encodeURIComponent(loaderRes.nameFilter)}`
+                            target += `page=${p}`
+                            navigate(target)
+                        } 
+                    } >
+                </Pager> 
+                : undefined
+            }
+            {characterDetails}
+    </Container>)
 }
