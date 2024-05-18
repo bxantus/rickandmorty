@@ -45,3 +45,15 @@ export async function getCharacters({page}:{page:number}):Promise<Result<Charact
         return { kind: "error", description: `Fetch failed ${err.toString()}` }
     }
 } 
+
+export async function getCharacter(id:string|number):Promise<Result<Character>> {
+    try {
+        const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`)
+        if (res.status != 200)
+            return { kind: "error", description: res.statusText, code: res.status }
+        const character = await res.json() as Character
+        return { kind: "success", data: character } 
+    } catch (err) {
+        return { kind: "error", description: `Fetch failed ${err.toString()}` }
+    }
+} 

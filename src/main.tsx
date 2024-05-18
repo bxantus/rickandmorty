@@ -1,11 +1,12 @@
 import React, { ReactElement, useState } from "react";
 import { createRoot } from "react-dom/client";
-import Button from "react-bootstrap/Button"
 import Container from "react-bootstrap/Container"
 import { CharactersResponse, Result, getCharacters } from "./rickandmortyapi";
 import CharactersTable from "./characters";
 import Alert from "react-bootstrap/Alert";
 import Pager from "./pager";
+import { RouterProvider,  createHashRouter } from "react-router-dom";
+import Profile, {loader as profileLoader} from "./profile";
 
 
 function App() {
@@ -38,11 +39,23 @@ function App() {
     </Container>
 }
 
+// using hash router instead of browser router  as it's easier to setup with gihub pages (and esbuild serve)
+// see: https://reactrouter.com/en/main/routers/create-hash-router
+const router = createHashRouter([
+    {
+        path: "/",
+        element: <App/>
+    },
+    {
+        path: "characters/:characterId",
+        loader: profileLoader,
+        element: <Profile/>
+    }
+])
+
 window.onload = async () => {
     const root = createRoot(document.getElementById("root")!);
     root.render(
-        <App >
-
-        </App>
+        <RouterProvider router={router} />
     );
 }
