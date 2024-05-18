@@ -41,7 +41,7 @@ export async function getCharacters({page, nameFilter}:{page:number|string, name
             page = Number.parseInt(page) // keep page as a number. string type is allowed for easy usage
         let url = `https://rickandmortyapi.com/api/character?page=${page}`
         if (nameFilter)
-            url += `&name=${nameFilter}` // todo: build real URL (values may have to be URL escaped here)
+            url += `&name=${encodeURIComponent(nameFilter)}` 
         const res = await fetch(url)
         if (res.status != 200)
             return { kind: "error", description: res.statusText, code: res.status }
