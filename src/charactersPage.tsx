@@ -70,7 +70,7 @@ export default function CharactersPage() {
                         onPageChanged={ p=> {
                             let target = "?"    
                             if (loaderRes.nameFilter != null)
-                                target += `nameFilter=${encodeURIComponent(loaderRes.nameFilter)}`
+                                target += `nameFilter=${encodeURIComponent(loaderRes.nameFilter)}&`
                             target += `page=${p}`
                             navigate(target)
                         } 
