@@ -34,9 +34,9 @@ export interface CharactersResponse {
     results: Character[]
 }
 
-export async function getCharacters():Promise<Result<CharactersResponse>> {
+export async function getCharacters({page}:{page:number}):Promise<Result<CharactersResponse>> {
     try {
-        const res = await fetch("https://rickandmortyapi.com/api/character")
+        const res = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`)
         if (res.status != 200)
             return { kind: "error", description: res.statusText, code: res.status }
         const characters = await res.json() as CharactersResponse

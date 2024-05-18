@@ -6,27 +6,25 @@ import { CharactersResponse, Result, getCharacters } from "./rickandmortyapi";
 import CharactersTable from "./characters";
 import Alert from "react-bootstrap/Alert";
 
-type Query<T> = Result<T> | { kind: "inprogress"} | { kind: "notstarted" }
 
 function App() {
-    // todo: maybe separate loading progress from the result data, it would be clearer
-    const [characterRes, updateCharacters] = useState<Query<CharactersResponse>>({kind:"notstarted"})
+    const [characterRes, updateCharacters] = useState<Result<CharactersResponse>|undefined>()
+    const [loading, setLoading] = useState(false)
+    const [page, setPage] = useState(1)
     
-    async function fetchCharacters() {
-        updateCharacters({kind:"inprogress"})
-        updateCharacters(await getCharacters())
+    async function fetchCharacters(forPage:number) {
+        setLoading(true)
+        updateCharacters(await getCharacters({page: forPage}))
+        setLoading(false)
     }
-    if (characterRes.kind == "notstarted") {
-        // start fetching and update at the end
-        fetchCharacters()
-    }
+    if (!loading && !characterRes) // initial fetch
+        fetchCharacters(page)
 
-    let characterDetails:ReactElement
+    let characterDetails:ReactElement = <></>
 
-    if (characterRes.kind == "success") {
+    if (characterRes?.kind == "success") {
         characterDetails = <CharactersTable characters={characterRes.data.results}></CharactersTable>
-    } else if (characterRes.kind == "notstarted" || characterRes.kind =="inprogress") characterDetails = <p>{characterRes.kind}</p> 
-    else characterDetails = <Alert variant="error">{characterRes.description}</Alert>
+    } else if (characterRes) characterDetails = <Alert variant="error">{characterRes.description}</Alert>
 
     return <Container className="p-3">
                 {characterDetails}
