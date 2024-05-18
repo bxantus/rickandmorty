@@ -6,7 +6,7 @@ import CharactersTable from "./characters";
 import Alert from "react-bootstrap/Alert";
 import Pager from "./pager";
 import { RouterProvider,  createHashRouter } from "react-router-dom";
-import Profile, {loader as profileLoader} from "./profile";
+import ProfilePage, {loader as profileLoader} from "./profile";
 
 
 function App() {
@@ -49,7 +49,7 @@ const router = createHashRouter([
     {
         path: "characters/:characterId",
         loader: profileLoader,
-        element: <Profile/>
+        element: <ProfilePage/>
     }
 ])
 
