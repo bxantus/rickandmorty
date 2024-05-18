@@ -65,7 +65,7 @@ export default function CharactersPage() {
                     />
                 </InputGroup>
             </Form>
-            {numPages > 0 ? 
+            {numPages > 1 ? 
                 <Pager page={page} numPages={numPages} 
                         onPageChanged={ p=> {
                             let target = "?"    
