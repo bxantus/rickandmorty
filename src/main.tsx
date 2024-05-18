@@ -13,7 +13,7 @@ const router = createHashRouter([
         loader: characterLoader,
     },
     {
-        path: "characters/:characterId",
+        path: "profile/:characterId",
         loader: profileLoader,
         element: <ProfilePage/>
     }
