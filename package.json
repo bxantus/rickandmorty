@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Rick&Morty Characters",
   "scripts": {
-    "bundle": "esbuild --bundle --sourcemap --outdir=public  src/main.tsx "
+    "bundle": "esbuild --bundle --sourcemap --outdir=public  src/main.tsx ",
+    "bundle-serve": "esbuild --bundle --watch --sourcemap --servedir=public --outdir=public  src/main.tsx "
   },
   "author": "bxantus",
   "license": "ISC",

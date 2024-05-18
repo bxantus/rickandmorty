@@ -14,6 +14,7 @@ function App() {
     
     async function fetchCharacters(forPage:number) {
         setLoading(true)
+        setPage(forPage)
         updateCharacters(await getCharacters({page: forPage}))
         setLoading(false)
     }
@@ -24,7 +25,7 @@ function App() {
 
     if (characterRes?.kind == "success") {
         characterDetails = <CharactersTable characters={characterRes.data.results}></CharactersTable>
-    } else if (characterRes) characterDetails = <Alert variant="error">{characterRes.description}</Alert>
+    } else if (characterRes) characterDetails = <Alert variant="error">Error: {characterRes.description}</Alert>
 
     return <Container className="p-3">
                 {characterDetails}
