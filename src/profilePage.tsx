@@ -34,14 +34,11 @@ function Profile({character}:{character:Character}) {
             <Card.Title>{character.name}</Card.Title>
             <Card.Subtitle>{character.species}, {character.gender}</Card.Subtitle>
             <ListGroup>
-                <ListGroup.Item>
-                    <div className="fw-bold">Status</div>
-                    {character.status}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                    <div className="fw-bold">Type</div>
-                    {character.type}
-                </ListGroup.Item>
+                <InfoEntry title="Status" text={character.status}/>
+                <InfoEntry title="Type" text={character.type}/>
+                <InfoEntry title="Origin location" text={character.origin.name}/>
+                <InfoEntry title="Last known location" text={character.location.name}/>
+                
                 <ListGroup.Item>
                     <div className="fw-bold">Episodes</div>
                     {/* todo */}
@@ -49,4 +46,13 @@ function Profile({character}:{character:Character}) {
             </ListGroup>
         </Card.Body>
     </Card>
+}
+
+function InfoEntry({title, text}:{title:string, text:string}) {
+    if (!text)
+        return <></>
+    return <ListGroup.Item>
+        <div className="fw-bold">{title}</div>
+        {text}
+    </ListGroup.Item>
 }
