@@ -27,6 +27,7 @@ export interface Character {
 export interface CharactersResponse {
     info: {
         count: number
+        currentPage: number
         pages: number
         next?: string
         prev?: string
@@ -34,12 +35,15 @@ export interface CharactersResponse {
     results: Character[]
 }
 
-export async function getCharacters({page}:{page:number}):Promise<Result<CharactersResponse>> {
+export async function getCharacters({page}:{page:number|string}):Promise<Result<CharactersResponse>> {
     try {
+        if (typeof page == "string")
+            page = Number.parseInt(page) // keep page as a number. string type is allowed for easy usage
         const res = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`)
         if (res.status != 200)
             return { kind: "error", description: res.statusText, code: res.status }
         const characters = await res.json() as CharactersResponse
+        characters.info.currentPage = page
         return { kind: "success", data: characters } 
     } catch (err) {
         return { kind: "error", description: `Fetch failed ${err.toString()}` }
