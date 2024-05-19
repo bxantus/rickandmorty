@@ -15,7 +15,7 @@ export default function CharactersTable({characters}:{characters:Character[]}) {
         </thead>
         <tbody>
             {characters.map( character => <tr className="align-middle" key={character.id}>
-                <td><img className="img-fluid" src={character.image}></img></td>
+                <td><img className="img-fluid avatar" src={character.image}></img></td>
                 <td><Link to={`profile/${character.id}`}>{character.name}</Link></td>
                 <td>{character.species}</td>
                 <td>{character.status}</td>

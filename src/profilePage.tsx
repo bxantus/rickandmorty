@@ -15,31 +15,37 @@ export function loader({ params }:LoaderFunctionArgs) {
 export default function ProfilePage() {
     const navigate = useNavigate()
     const character = useLoaderData() as Result<Character>
-    return <Container className="p-3">
-        {/* Navigate -1 corresponds to going back one page in the history */}
-        <Button onClick={()=> navigate(-1)}>Back</Button> 
+    // Navigate -1 corresponds to going back one page in the history 
+    const navigateBack = ()=> navigate(-1)
+    return <Container className="p-3 d-flex justify-content-center">
         {
             character.kind == "error" ?
-                <Alert variant="error">Error</Alert>
+                <>
+                    <Alert variant="error">Error</Alert>
+                    <Button onClick={navigateBack}>Back</Button> 
+                </>
                 :
-                <Profile character={character.data} />
+                <Profile character={character.data} onBack={navigateBack}/>
         }
     </Container>
 }
 
-function Profile({character}:{character:Character}) {
+function Profile({character, onBack}:{character:Character, onBack?:()=>void}) {
     return <Card>
         <Card.Img id="profileImage" src={character.image}/>
         <Card.Body>
             <Card.Title>{character.name}</Card.Title>
             <Card.Subtitle>{character.species}, {character.gender}</Card.Subtitle>
-            <ListGroup>
-                <InfoEntry title="Status" text={character.status}/>
-                <InfoEntry title="Type" text={character.type}/>
-                <InfoEntry title="Origin location" text={character.origin.name}/>
-                <InfoEntry title="Last known location" text={character.location.name}/>
-                <InfoEntry title="Episodes" text={gatherEpisodeIds(character)}/>
-            </ListGroup>
+        </Card.Body>
+        <ListGroup>
+            <InfoEntry title="Status" text={character.status}/>
+            <InfoEntry title="Type" text={character.type}/>
+            <InfoEntry title="Origin location" text={character.origin.name}/>
+            <InfoEntry title="Last known location" text={character.location.name}/>
+            <InfoEntry title="Episodes" text={gatherEpisodeIds(character)}/>
+        </ListGroup>
+        <Card.Body>
+            <Button className="profile-back" onClick={onBack}>Back</Button> 
         </Card.Body>
     </Card>
 }
