@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button"
 import Alert from "react-bootstrap/Alert";
 import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
+import { ErrorAlert } from "./errorComponents";
 
 export function loader({ params }:LoaderFunctionArgs) {
     return getCharacter(params.characterId ?? 1)
@@ -18,10 +19,12 @@ export default function ProfilePage() {
     return <Container className="p-3 d-flex justify-content-center">
         {
             character.kind == "error" ?
-                <>
-                    <Alert variant="error">Error</Alert>
-                    <Button onClick={navigateBack}>Back</Button> 
-                </>
+                <Card className="w-75">
+                    <ErrorAlert title="Couldn't load character profile" description={character.description} code={character.code}/>
+                    <Card.Body>
+                        <Button onClick={navigateBack}>Back</Button> 
+                    </Card.Body>
+                </Card>
                 :
                 <Profile character={character.data} onBack={navigateBack}/>
         }

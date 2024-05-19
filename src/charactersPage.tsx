@@ -7,6 +7,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import BForm from "react-bootstrap/Form";
 import Pager from "./pager";
 import { Form, LoaderFunctionArgs, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
+import { ErrorAlert } from "./errorComponents";
 
 interface CharacterLoaderResult {
     characterRes: Result<CharactersResponse>
@@ -47,7 +48,7 @@ export default function CharactersPage() {
 
     if (characterRes?.kind == "success") {
         characterDetails = <CharactersTable className="mb-4" characters={characterRes.data.results}></CharactersTable>
-    } else if (characterRes) characterDetails = <Alert variant="error">Error: {characterRes.description}</Alert>
+    } else if (characterRes) characterDetails = <ErrorAlert description={characterRes.description} code={characterRes.code} title=""></ErrorAlert>
 
     const onPageChanged = (p:number) => {
         let target = "?"    
