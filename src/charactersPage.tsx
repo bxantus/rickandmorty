@@ -63,6 +63,7 @@ export default function CharactersPage() {
 
     return (
         <Container className="p-3">
+            <h2 className="mb-4">Rick&Morty characters</h2>
             <Form className="mb-4">
                 <InputGroup>
                     <InputGroup.Text>Search by name</InputGroup.Text>
@@ -75,6 +76,7 @@ export default function CharactersPage() {
                             }
                         }
                     />
+                    <InputGroup.Text><span className="material-symbols-outlined">search</span></InputGroup.Text>
                 </InputGroup>
             </Form>
             {paging}
