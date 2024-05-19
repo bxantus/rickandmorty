@@ -36,15 +36,14 @@ function Profile({character, onBack}:{character:Character, onBack?:()=>void}) {
         <Card.Body>
             <Card.Title>{character.name}</Card.Title>
             <Card.Subtitle>{character.species}, {character.gender}</Card.Subtitle>
-        </Card.Body>
-        <ListGroup>
-            <InfoEntry title="Status" text={character.status}/>
-            <InfoEntry title="Type" text={character.type}/>
-            <InfoEntry title="Origin location" text={character.origin.name}/>
-            <InfoEntry title="Last known location" text={character.location.name}/>
-            <InfoEntry title="Episodes" text={gatherEpisodeIds(character)}/>
-        </ListGroup>
-        <Card.Body>
+            <div className="my-3">
+                <InfoEntry title="Status" text={character.status}/>
+                <InfoEntry title="Type" text={character.type}/>
+                <InfoEntry title="Origin location" text={character.origin.name}/>
+                <InfoEntry title="Last known location" text={character.location.name}/>
+                <InfoEntry title="Episodes" text={gatherEpisodeIds(character)}/>
+                
+            </div>
             <Button className="profile-back" onClick={onBack}>Back</Button> 
         </Card.Body>
     </Card>
@@ -53,10 +52,10 @@ function Profile({character, onBack}:{character:Character, onBack?:()=>void}) {
 function InfoEntry({title, text}:{title:string, text:string}) {
     if (!text)
         return <></>
-    return <ListGroup.Item>
+    return <div className="my-2">
         <div className="fw-bold">{title}</div>
         {text}
-    </ListGroup.Item>
+    </div>
 }
 
 function gatherEpisodeIds(character:Character) {

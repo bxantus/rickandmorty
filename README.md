@@ -12,10 +12,6 @@ table.
 have an onChange event, and you should only show rows that contain the searched
 string.
 
-### Requirements
-* Use TypeScript
-* Use some kind of UI library you’re familiar with (MUI, Bootstrap, Chakra, etc.)
-
 ## Technical notes
 
 Uses:

@@ -46,7 +46,7 @@ export default function CharactersPage() {
     let characterDetails:ReactElement = <></>
 
     if (characterRes?.kind == "success") {
-        characterDetails = <CharactersTable characters={characterRes.data.results}></CharactersTable>
+        characterDetails = <CharactersTable className="mb-4" characters={characterRes.data.results}></CharactersTable>
     } else if (characterRes) characterDetails = <Alert variant="error">Error: {characterRes.description}</Alert>
 
     const onPageChanged = (p:number) => {
@@ -63,7 +63,7 @@ export default function CharactersPage() {
 
     return (
         <Container className="p-3">
-            <Form className="mb-3">
+            <Form className="mb-4">
                 <InputGroup>
                     <InputGroup.Text>Search by name</InputGroup.Text>
                     <BForm.Control name="nameFilter" 
