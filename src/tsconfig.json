@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "noEmit": true,
+        "jsx": "react",
+        "module": "ES6",
+        "moduleResolution": "Bundler",
+        "lib": ["DOM", "ES2022"]
+    }
+}

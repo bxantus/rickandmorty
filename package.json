@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Rick&Morty Characters",
   "scripts": {
+    "compile": "tsc -p src",
+    "watch": "tsc --watch -p src",
     "bundle": "esbuild --bundle --sourcemap --outdir=public  src/main.tsx ",
     "bundle-serve": "esbuild --bundle --watch --sourcemap --servedir=public --outdir=public src/main.tsx", 
-    "publish": "esbuild --bundle --outdir=public --minify  src/main.tsx && gh-pages -d public"
+    "publish": "npm run compile && esbuild --bundle --outdir=public --minify  src/main.tsx && gh-pages -d public"
   },
   "author": "bxantus",
   "license": "ISC",
