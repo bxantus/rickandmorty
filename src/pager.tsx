@@ -12,7 +12,7 @@ export default function Pager({page, numPages, onPageChanged, maxPagesToDisplay}
     const pagesToDisplay = Math.min(numPages, maxPagesToDisplay ?? 5)
     
     let firstPage = page - (pagesToDisplay >> 1) // using integer division
-    if (page < pagesToDisplay/2)  //we're at the beginning
+    if (firstPage < 1)  //we're at the beginning
         firstPage = 1
     else if (page > numPages - pagesToDisplay/2)  // at the end
         firstPage = numPages - pagesToDisplay + 1
