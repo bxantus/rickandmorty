@@ -24,11 +24,11 @@ export default function Pager({page, numPages, onPageChanged, maxPagesToDisplay}
     for (let p = firstPage; p < firstPage + pagesToDisplay; ++p) 
         items.push(<Pagination.Item  key={p} active={page == p} onClick={ changePageToHandler(p) } >{p}</Pagination.Item>)
 
-    return <Pagination>
-        <Pagination.First active={page == 1} onClick={changePageToHandler(1)}/>
-        <Pagination.Prev active={page == 1} onClick={ page > 1 ? changePageToHandler(page - 1) : undefined}/>
+    return <Pagination className="justify-content-center">
+        <Pagination.First disabled={page == 1} onClick={changePageToHandler(1)}/>
+        <Pagination.Prev disabled={page == 1} onClick={ page > 1 ? changePageToHandler(page - 1) : undefined}/>
         {items}
-        <Pagination.Next active={page == numPages} onClick={ page < numPages ? changePageToHandler(page + 1) : undefined}/>
-        <Pagination.Last active={page == numPages} onClick={changePageToHandler(numPages)}/>
+        <Pagination.Next disabled={page == numPages} onClick={ page < numPages ? changePageToHandler(page + 1) : undefined}/>
+        <Pagination.Last disabled={page == numPages} onClick={changePageToHandler(numPages)}/>
     </Pagination>
 }

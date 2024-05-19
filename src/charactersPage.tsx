@@ -49,9 +49,21 @@ export default function CharactersPage() {
         characterDetails = <CharactersTable characters={characterRes.data.results}></CharactersTable>
     } else if (characterRes) characterDetails = <Alert variant="error">Error: {characterRes.description}</Alert>
 
+    const onPageChanged = (p:number) => {
+        let target = "?"    
+        if (loaderRes.nameFilter != null)
+            target += `nameFilter=${encodeURIComponent(loaderRes.nameFilter)}&`
+        target += `page=${p}`
+        navigate(target)
+    } 
+
+    const paging = numPages > 1 ? 
+        <Pager page={page} numPages={numPages} onPageChanged={ onPageChanged } />
+        : undefined
+
     return (
         <Container className="p-3">
-            <Form>
+            <Form className="mb-3">
                 <InputGroup>
                     <InputGroup.Text>Search by name</InputGroup.Text>
                     <BForm.Control name="nameFilter" 
@@ -65,19 +77,8 @@ export default function CharactersPage() {
                     />
                 </InputGroup>
             </Form>
-            {numPages > 1 ? 
-                <Pager page={page} numPages={numPages} 
-                        onPageChanged={ p=> {
-                            let target = "?"    
-                            if (loaderRes.nameFilter != null)
-                                target += `nameFilter=${encodeURIComponent(loaderRes.nameFilter)}&`
-                            target += `page=${p}`
-                            navigate(target)
-                        } 
-                    } >
-                </Pager> 
-                : undefined
-            }
+            {paging}
             {characterDetails}
+            {paging}
     </Container>)
 }
