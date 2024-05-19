@@ -5,10 +5,8 @@ import Button from "react-bootstrap/Button"
 import Alert from "react-bootstrap/Alert";
 import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
 
 export function loader({ params }:LoaderFunctionArgs) {
-
     return getCharacter(params.characterId ?? 1)
 }
 

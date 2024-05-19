@@ -18,17 +18,17 @@ export default function Pager({page, numPages, onPageChanged, maxPagesToDisplay}
         firstPage = numPages - pagesToDisplay + 1
     const items:ReactElement[] = []
     
-    // changePageToHandler returns a function, which when called will call onPageChanged
-    const changePageToHandler = (targetPage:number) =>  () => onPageChanged?.(targetPage)
+    // changePageTo returns a function, which when called will call onPageChanged
+    const changePageTo = (targetPage:number) =>  () => onPageChanged?.(targetPage)
 
     for (let p = firstPage; p < firstPage + pagesToDisplay; ++p) 
-        items.push(<Pagination.Item  key={p} active={page == p} onClick={ changePageToHandler(p) } >{p}</Pagination.Item>)
+        items.push(<Pagination.Item  key={p} active={page == p} onClick={ changePageTo(p) } >{p}</Pagination.Item>)
 
     return <Pagination className="justify-content-center">
-        <Pagination.First disabled={page == 1} onClick={changePageToHandler(1)}/>
-        <Pagination.Prev disabled={page == 1} onClick={ page > 1 ? changePageToHandler(page - 1) : undefined}/>
+        <Pagination.First disabled={page == 1} onClick={changePageTo(1)}/>
+        <Pagination.Prev disabled={page == 1} onClick={ page > 1 ? changePageTo(page - 1) : undefined}/>
         {items}
-        <Pagination.Next disabled={page == numPages} onClick={ page < numPages ? changePageToHandler(page + 1) : undefined}/>
-        <Pagination.Last disabled={page == numPages} onClick={changePageToHandler(numPages)}/>
+        <Pagination.Next disabled={page == numPages} onClick={ page < numPages ? changePageTo(page + 1) : undefined}/>
+        <Pagination.Last disabled={page == numPages} onClick={changePageTo(numPages)}/>
     </Pagination>
 }
