@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 import InputGroup from "react-bootstrap/InputGroup";
 import BForm from "react-bootstrap/Form";
 import Pager from "./pager";
-import { Form, LoaderFunctionArgs, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
+import { Form, LoaderFunctionArgs, useLoaderData, useNavigate, useSubmit, ScrollRestoration } from "react-router-dom";
 import { ErrorAlert } from "./errorComponents";
 
 interface CharacterLoaderResult {
@@ -64,6 +64,9 @@ export default function CharactersPage() {
 
     return (
         <Container className="p-3">
+            <ScrollRestoration getKey={(location) => {
+                return location.pathname + location.search
+            }} />
             <h2 className="mb-4">Rick&Morty characters</h2>
             <Form className="mb-4">
                 <InputGroup>
