@@ -4,22 +4,18 @@ import Table from "react-bootstrap/Table"
 import { Link } from "react-router-dom";
 
 export default function CharactersTable({characters, className}:{characters:Character[], className?:string}) {
-    return <Table striped hover className={className}>
-        <thead>
-            <tr>
-                <th>Avatar</th>
-                <th>Name</th>
-                <th>Species</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {characters.map( character => <tr className="align-middle" key={character.id}>
-                <td><Link to={`profile/${character.id}`}><img className="img-fluid avatar" src={character.image}></img></Link></td>
-                <td><Link to={`profile/${character.id}`}>{character.name}</Link></td>
-                <td>{character.species}</td>
-                <td>{character.status}</td>
-            </tr>)}
-        </tbody>
-    </Table>
+    return <div className={"characters " + className}>
+        <div className="header-row">
+            <span className="header">Avatar</span>
+            <span className="header">Name</span>
+            <span className="header">Species</span>
+            <span className="header">Status</span>
+        </div>
+        {characters.map( character => <div className="table-row">
+            <Link to={`profile/${character.id}`}><img className="img-fluid avatar" src={character.image}></img></Link>
+            <Link to={`profile/${character.id}`}>{character.name}</Link>
+            <span>{character.species}</span>
+            <span>{character.status}</span>
+        </div>)}
+    </div>
 }

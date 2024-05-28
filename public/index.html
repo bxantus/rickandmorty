@@ -15,8 +15,31 @@
             max-width: 300px;
         }
 
-        table img.avatar {
+        img.avatar {
             max-height: 80px;
+        }
+
+        div.characters {
+            display: grid;
+            grid-template-columns: auto 1fr 13% 13%;
+            column-gap: 30px;
+        }
+
+        .characters > .table-row, .characters > .header-row {
+            display: grid;
+            grid-column: 1/5;
+            grid-template-columns: subgrid;
+            align-items: center;
+            padding-bottom: 1px;
+        }
+
+        .characters > .header-row {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .characters > .table-row:nth-child(even) {
+            background-color:  #eee;
         }
 
         div.card {
