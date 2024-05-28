@@ -1,6 +1,5 @@
 import React from "react";
 import { Character } from "./rickandmortyapi";
-import Table from "react-bootstrap/Table"
 import { Link } from "react-router-dom";
 
 export default function CharactersTable({characters, className}:{characters:Character[], className?:string}) {

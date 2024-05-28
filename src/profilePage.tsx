@@ -2,7 +2,6 @@ import React from "react";
 import { Character, Result, getCharacter } from "./rickandmortyapi";
 import Container from "react-bootstrap/Container"
 import Button from "react-bootstrap/Button"
-import Alert from "react-bootstrap/Alert";
 import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import { ErrorAlert } from "./errorComponents";

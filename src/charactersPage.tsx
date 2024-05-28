@@ -1,8 +1,7 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect } from "react";
 import Container from "react-bootstrap/Container"
 import { CharactersResponse, Result, getCharacters } from "./rickandmortyapi";
 import CharactersTable from "./characters";
-import Alert from "react-bootstrap/Alert";
 import InputGroup from "react-bootstrap/InputGroup";
 import BForm from "react-bootstrap/Form";
 import Pager from "./pager";
